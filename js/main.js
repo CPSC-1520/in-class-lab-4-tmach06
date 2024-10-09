@@ -1,6 +1,61 @@
 
 // Enter your code below.
 
+// Selecting new-order-form
+const newOrderForm = document.querySelector('#new-order-form');
+
+// Add event listener to submit and prevent default
+newOrderForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  // Assign elements to variables
+  const itemName = event.target.elements['order-item-name'];
+  const itemPrice = event.target.elements['order-item-price'];
+  const itemSize = event.target.elements['order-size'];
+
+  
+  console.log(`ItemName: ${itemName.value}`);
+  console.log(`ItemPrice: ${itemPrice.value}`);
+  console.log(`ItemSize: ${itemSize.value}`);
+
+  // Validation
+  let isFormValid = true;
+
+  if (isValueNotEmpty(itemName.value)) {
+    itemName.classList.remove('is-invalid');
+  } else {
+    itemName.classList.add('is-invalid');
+    isFormValid = false;
+  }
+  
+  if (isValueNotEmpty(itemPrice.value) && isGreaterThanFive(itemPrice.value)) {
+    itemPrice.classList.remove('is-invalid');
+  } else {
+    itemPrice.classList.add('is-invalid');
+    isFormValid = false;
+  }
+
+  if (isValueNotEmpty(itemSize.value)) {
+    itemSize.classList.remove('is-invalid');
+  } else {
+    itemSize.classList.add('is-invalid');
+    isFormValid = false;
+  }
+
+  // Add items and reset if valid otherwise throw invalid
+  if (isFormValid) {
+    addOrderItem(itemName.value, itemPrice.value, itemSize.value);
+
+    itemName.value = '';
+    itemPrice.value = '';
+    itemSize.value = '';
+  } else {
+    console.log('Invalid input, check name, price and size again!');
+  }
+});
+
+
+
 
 // functions needed for assessment (do not change.)
 
